@@ -7262,6 +7262,7 @@ gpointer janus_sip_sofia_thread(gpointer user_data) {
 				SIPTAG_SUPPORTED(NULL),
 				NTATAG_CANCEL_2543(session->account.rfc2543_cancel),
 				NTATAG_SIP_T1X64(sip_timer_t1x64),
+				TPTAG_REUSE(0),
 				TAG_NULL());
 	if(query_contact_header)
 		nua_get_params(session->stack->s_nua, SIPTAG_FROM_STR(""), TAG_END());
