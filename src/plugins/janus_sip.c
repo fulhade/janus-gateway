@@ -6614,6 +6614,8 @@ static int janus_sip_allocate_local_ports(janus_sip_session *session, gboolean u
 				return -1;
 			if(session->media.audio_rtp_fd == -1) {
 				session->media.audio_rtp_fd = socket(AF_INET6, SOCK_DGRAM, 0);
+				if(session->media.audio_rtp_fd == -1)
+					JANUS_LOG(LOG_ERR, "Error creating RTP socket: (error=%s)\n", g_strerror(errno));
 				int v6only = 0;
 				if(session->media.audio_rtp_fd != -1 && setsockopt(session->media.audio_rtp_fd, IPPROTO_IPV6, IPV6_V6ONLY, &v6only, sizeof(v6only)) != 0) {
 					JANUS_LOG(LOG_WARN, "Error setting v6only to false on audio RTP socket (error=%s)\n",
@@ -6631,6 +6633,8 @@ static int janus_sip_allocate_local_ports(janus_sip_session *session, gboolean u
 			}
 			if(session->media.audio_rtcp_fd == -1) {
 				session->media.audio_rtcp_fd = socket(AF_INET6, SOCK_DGRAM, 0);
+				if(session->media.audio_rtcp_fd == -1)
+					JANUS_LOG(LOG_ERR, "Error creating RTCP socket: (error=%s)\n", g_strerror(errno));
 				int v6only = 0;
 				if(session->media.audio_rtcp_fd != -1 && setsockopt(session->media.audio_rtcp_fd, IPPROTO_IPV6, IPV6_V6ONLY, &v6only, sizeof(v6only)) != 0) {
 					JANUS_LOG(LOG_WARN, "Error setting v6only to false on audio RTCP socket (error=%s)\n",
